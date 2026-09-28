@@ -1,0 +1,22 @@
+# Durable paper portfolio
+
+`PaperPortfolio` is a **paper-only** SQLite accounting adapter. It neither fetches quotes nor calls a broker. Its values are simulated USD integer cents, not money or a custody balance. Keep the SQLite path file-backed. One database handles one pool; create a separate file per pool. Do not modify the SQLite tables outside this adapter.
+
+```python
+from datetime import UTC, datetime
+from hedge.paper_portfolio import PaperPortfolio, PriceQuote
+
+portfolio = PaperPortfolio("/private/hedge/pool-paper.sqlite", max_quote_age_seconds=300)
+portfolio.initialize("pool-id", starting_cash_cents=100_000)
+quote = PriceQuote(price_cents=1234, observed_at=datetime.now(UTC), source="trusted-data-feed")
+result = portfolio.process(reviewed_decision, {"ABC": quote})
+view = portfolio.snapshot("pool-id")
+fund_view = fund_service.snapshot(**portfolio.dashboard_inputs("pool-id"))
+portfolio.close()
+```
+
+`reviewed_decision` must be a valid `hedge.contracts.Decision` whose `pool_id` matches initialization. The caller must obtain quotes from a trusted provider and pass **exactly one** `PriceQuote` for each currently held ticker and each proposed ticker. An absent, stale, future, malformed, or unpriced quote is never filled in with a default. The decision processor uses `PaperTradingSystem` and its `PaperPolicy`/`RiskGate` before any account update. A complete but stale quote yields a durable `REJECTED` decision. Missing or malformed quote inputs raise `ValueError` without a decision write. Failed storage operations roll back audit, result, prices, cash, positions, and cost lots together. An identical decision retry, including after process restart, returns the original `ProcessingResult` with `idempotent=True`; reused decision ID with altered decision content raises `IdempotencyConflict`. The original supplied price snapshot remains available via `decision_prices(decision_id)`, regardless of later retry quotes. The decision ID is the idempotency key; a retry does not replace historical quotes. Terminal rejected decisions also remain idempotent.
+
+`record_prices(pool_id, quotes)` appends a fresh, complete valuation snapshot for **all** held tickers when there is no new trade. A successful decision appends its supplied quotes. Both methods reject a quote timestamp older than the last accepted quote for that ticker. `snapshot(pool_id, as_of=None)` reads persistent cash, holdings, exact FIFO acquisition lots, per-position `total_basis_cents`, per-share `cost_basis_cents` where integral, quote source/time, NAV, and exact unrealized P&L. It raises if a held quote is absent, stale, or future. `dashboard_inputs(pool_id, as_of=None)` returns only actual stored quote prices and a precisely representable integer per-share basis suitable for `PaperFundService.snapshot`. If FIFO lots create fractional average-cent cost basis, it raises instead of rounding and misreporting P&L. Do not catch these errors and replace them with a flat zero-price portfolio; show an unavailable/stale view instead. Member authorization and pool lifecycle checks remain with the calling application. Paper fund member contributions do **not** automatically alter this separate trading account: after verifying each authoritative `PaperFundService` capital event ID, pool, and amount, call `record_contribution(pool_id, event_id=..., cents=...)` once (identical retries return `False`; changed amount raises). Compare `contribution_events(pool_id)` to the authoritative fund ledger's non-starting contributions before presenting NAV. A crash between writes to the two independent SQLite stores leaves an unreconciled state that must be shown as unavailable until repaired. Do not label an unreconciled snapshot as a member-fund valuation. The initial `initialize` amount must equal the authoritative pool starting balance and remains bound after trades and contributions. `initialized_cash_cents(pool_id)` reads this immutable seed using a bounded first-audit-row lookup; compare it to the fund's starting balance without loading the full audit ledger.
+
+SQLite `BEGIN IMMEDIATE` serializes writes across instances. Cash, holdings, lots, decisions, audit transitions, and quotes persist atomically in the one database. Audit transitions and supplied quote records are appended, not rewritten. The adapter does not expose deposit, withdrawal, live execution, brokerage, or payment operations. Keep this local file secured and backed up; direct database tampering is outside its threat model.
