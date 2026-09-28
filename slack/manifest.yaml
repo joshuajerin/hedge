@@ -1,0 +1,24 @@
+display_information:
+  name: Hedge
+  description: Slack entry point and CIO coordinator for Hedge research.
+  background_color: "#1F7A5C"
+features:
+  bot_user:
+    display_name: Hedge
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      # The local bridge receives app mentions, reads the originating public
+      # thread, replies on failures, and adds lifecycle reactions.
+      - app_mentions:read
+      - channels:history
+      - chat:write
+      - reactions:write
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_mention
+  org_deploy_enabled: false
+  socket_mode_enabled: true
+  token_rotation_enabled: true

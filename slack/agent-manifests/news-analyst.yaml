@@ -1,0 +1,18 @@
+display_information:
+  name: Hedge News Analyst
+  description: News and catalyst analysis for Hedge research.
+  background_color: "#6B3E26"
+features:
+  bot_user:
+    display_name: News Analyst
+    always_online: true
+oauth_config:
+  # Outbound thread replies only. No event subscription, Socket Mode, or
+  # read/reaction/DM scope is granted to specialist profiles.
+  scopes:
+    bot:
+      - chat:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: true

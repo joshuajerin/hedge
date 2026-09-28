@@ -1,0 +1,54 @@
+# Immutable role-to-Slack-profile registry. Role keys, app identities, and token
+# environment-variable names are deployment contracts; do not reuse a profile or
+# token across roles. Values are variable names only, never token values.
+schema_version: 1
+profiles:
+  hedge_cio:
+    display_name: Hedge
+    brainbase_agent_id: 4ac44fd1-b386-49aa-8b39-a3ba7037fdc8
+    manifest: slack/manifest.yaml
+    delivery: inbound_socket_mode_and_thread_reply
+    bot_token_env: SLACK_BOT_TOKEN
+    app_token_env: SLACK_APP_TOKEN
+  market_scout:
+    display_name: Market Scout
+    brainbase_agent_id: 88c44417-fda4-4c2c-882a-4140944ff3b7
+    manifest: slack/agent-manifests/market-scout.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_MARKET_SCOUT_BOT_TOKEN
+    app_token_env: null
+  trend_analyst:
+    display_name: Trend Analyst
+    brainbase_agent_id: 446b892d-6f80-4922-8baa-bc2e70923a94
+    manifest: slack/agent-manifests/trend-analyst.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_TREND_ANALYST_BOT_TOKEN
+    app_token_env: null
+  news_analyst:
+    display_name: News Analyst
+    brainbase_agent_id: 55a1fbde-e88a-439f-8656-ead605e566aa
+    manifest: slack/agent-manifests/news-analyst.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_NEWS_ANALYST_BOT_TOKEN
+    app_token_env: null
+  portfolio_manager:
+    display_name: Portfolio Manager
+    brainbase_agent_id: 36c63bd4-8e1b-408f-ade8-b8ff67079c1a
+    manifest: slack/agent-manifests/portfolio-manager.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_PORTFOLIO_MANAGER_BOT_TOKEN
+    app_token_env: null
+  backtester:
+    display_name: Backtester
+    brainbase_agent_id: 1ba89cba-bf32-45ff-bf2d-17a7718b50ea
+    manifest: slack/agent-manifests/backtester.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_BACKTESTER_BOT_TOKEN
+    app_token_env: null
+  risk_reviewer:
+    display_name: Risk Reviewer
+    brainbase_agent_id: f687e3b7-8ca4-4cd4-a8c5-370c080e540a
+    manifest: slack/agent-manifests/risk-reviewer.yaml
+    delivery: outbound_thread_reply_only
+    bot_token_env: HEDGE_RISK_REVIEWER_BOT_TOKEN
+    app_token_env: null

@@ -1,0 +1,18 @@
+display_information:
+  name: Hedge Backtester
+  description: Historical validation for Hedge research.
+  background_color: "#5F0F40"
+features:
+  bot_user:
+    display_name: Backtester
+    always_online: true
+oauth_config:
+  # Outbound thread replies only. No event subscription, Socket Mode, or
+  # read/reaction/DM scope is granted to specialist profiles.
+  scopes:
+    bot:
+      - chat:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: true

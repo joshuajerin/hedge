@@ -1,0 +1,18 @@
+display_information:
+  name: Hedge Trend Analyst
+  description: Technical and trend analysis for Hedge research.
+  background_color: "#254E70"
+features:
+  bot_user:
+    display_name: Trend Analyst
+    always_online: true
+oauth_config:
+  # Outbound thread replies only. No event subscription, Socket Mode, or
+  # read/reaction/DM scope is granted to specialist profiles.
+  scopes:
+    bot:
+      - chat:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: true

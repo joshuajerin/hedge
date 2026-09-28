@@ -1,0 +1,18 @@
+display_information:
+  name: Hedge Portfolio Manager
+  description: Portfolio context for Hedge research.
+  background_color: "#3D405B"
+features:
+  bot_user:
+    display_name: Portfolio Manager
+    always_online: true
+oauth_config:
+  # Outbound thread replies only. No event subscription, Socket Mode, or
+  # read/reaction/DM scope is granted to specialist profiles.
+  scopes:
+    bot:
+      - chat:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: true
