@@ -1,0 +1,45 @@
+# brainbase-orchestration.yaml — declarative orchestration manifest.
+# Committed to source control. Edit by hand, then
+# `brainbase orchestration push`. Member agents live under ./agents/.
+# Schedule triggers are writable. App/Pipedream triggers are preserved
+# as read-only context and ignored by `orchestration push`.
+
+schema: 1
+orchestration:
+  name: Hedge
+  description: "Paper-only investing research with bounded specialist handoffs,
+    typed proposal review, and trusted Slack result delivery."
+  icon: 📈
+  icon_color: "#1F7A5C"
+members:
+  - slug: hedge-cio
+    name: Hedge CIO
+  - slug: market-scout
+    name: Market Scout
+  - slug: trend-analyst
+    name: Trend Analyst
+  - slug: news-analyst
+    name: News Analyst
+  - slug: portfolio-manager
+    name: Portfolio Manager
+  - slug: backtester
+    name: Backtester
+  - slug: risk-reviewer
+    name: Risk Reviewer
+edges:
+  - from: hedge-cio
+    to: market-scout
+  - from: hedge-cio
+    to: trend-analyst
+  - from: hedge-cio
+    to: news-analyst
+  - from: market-scout
+    to: portfolio-manager
+  - from: trend-analyst
+    to: portfolio-manager
+  - from: news-analyst
+    to: portfolio-manager
+  - from: portfolio-manager
+    to: backtester
+  - from: backtester
+    to: risk-reviewer

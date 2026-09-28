@@ -1,0 +1,25 @@
+# brainbase.agent.yaml — declarative agent manifest.
+# Committed to source control. Edit by hand, then `brainbase agent push`.
+
+schema: 1
+id: 4ac44fd1-b386-49aa-8b39-a3ba7037fdc8
+harness: kafka
+machine_kind: daytona
+default_model: gemini-3.8-flash
+agent:
+  name: Hedge CIO
+  tagline: Slack-facing coordinator for a virtual investing pool.
+instructions:
+  file: .brainbase/instructions.md
+playbooks: []
+skills: []
+mcp: []
+evals: []
+capabilities:
+  memory: true
+  browser: true
+  # Slack delivery is handled by the trusted local bridge.
+  slack: true
+  meeting: false
+  github: false
+  linear: false

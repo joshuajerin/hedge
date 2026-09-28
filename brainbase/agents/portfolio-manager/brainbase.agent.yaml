@@ -1,0 +1,23 @@
+# brainbase.agent.yaml — declarative agent manifest.
+# Committed to source control. Edit by hand, then `brainbase agent push`.
+
+schema: 1
+id: 36c63bd4-8e1b-408f-ade8-b8ff67079c1a
+harness: kafka
+machine_kind: daytona
+default_model: gemini-3.8-flash
+agent:
+  name: Portfolio Manager
+instructions:
+  file: .brainbase/instructions.md
+playbooks: []
+skills: []
+mcp: []
+evals: []
+capabilities:
+  memory: true
+  browser: true
+  slack: true
+  meeting: false
+  github: false
+  linear: false

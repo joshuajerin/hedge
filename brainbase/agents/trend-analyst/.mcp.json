@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "brainbase-orchestration": {
+      "url": "https://brainbase-orchestration-mcp.onrender.com/t/${BRAINBASE_THREAD_ID}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${BRAINBASE_TOKEN}"
+      },
+      "type": "http"
+    },
+    "brainbase-memory": {
+      "url": "https://brainbase-memory-mcp.onrender.com/t/${BRAINBASE_THREAD_ID}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${BRAINBASE_TOKEN}"
+      },
+      "type": "http"
+    },
+    "brainbase-browser": {
+      "url": "https://brainbase-browser-mcp.onrender.com/t/${BRAINBASE_THREAD_ID}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${BRAINBASE_TOKEN}"
+      },
+      "type": "http"
+    }
+  }
+}

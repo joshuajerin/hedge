@@ -1,0 +1,4 @@
+*
+!.gitignore
+sync-state.json
+secrets.env

@@ -1,0 +1,23 @@
+# brainbase.agent.yaml — declarative agent manifest.
+# Committed to source control. Edit by hand, then `brainbase agent push`.
+
+schema: 1
+id: 88c44417-fda4-4c2c-882a-4140944ff3b7
+harness: kafka
+machine_kind: daytona
+default_model: gemini-3.8-flash
+agent:
+  name: Market Scout
+instructions:
+  file: .brainbase/instructions.md
+playbooks: []
+skills: []
+mcp: []
+evals: []
+capabilities:
+  memory: true
+  browser: true
+  slack: true
+  meeting: false
+  github: false
+  linear: false
