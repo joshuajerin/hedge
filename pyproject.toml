@@ -1,0 +1,22 @@
+[project]
+name = "hedge"
+version = "0.1.0"
+description = "Slack-native investing club with Brainbase research and Yahoo Finance data."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+ibkr = ["ibapi>=9.81.1.post1"]
+slack = ["slack-bolt>=1.18,<2"]
+yahoo = ["yfinance>=0.2.66,<1"]
+
+[project.scripts]
+hedge = "hedge.cli:main"
+hedge-slack-bridge = "hedge.slack_bridge:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hedge"]
