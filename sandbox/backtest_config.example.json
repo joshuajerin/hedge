@@ -1,0 +1,7 @@
+{
+  "mode": "paper",
+  "initial_cash": "10000",
+  "commission_per_order": "1.00",
+  "slippage_bps": "5",
+  "fill_delay_bars": 1
+}
